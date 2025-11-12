@@ -1,0 +1,12 @@
+{
+  "panel key.90897867keykey": {
+    "rol": "admin",
+    "bitis": "2026-08-03",
+    "perms": [
+      "manage_keys",
+      "view_support",
+      "view_stats",
+      "manage_users"
+    ]
+  }
+}

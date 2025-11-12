@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Admin Paneli - ANKA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" crossorigin="anonymous"></script>
+  <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><img src="/static/img/logo.svg" width="28" alt="logo"> ANKA Admin</div>
+    <div class="nav-right">
+      <span>Admin: {{ session['key'] }}</span>
+      <a href="/cikis" class="btn small red">Çıkış</a>
+    </div>
+  </div>
+  <div class="container flex">
+    <div class="card">
+      <h2>Yeni Kullanıcı Oluştur</h2>
+      <form method="post" action="/admin/create_user">
+        <label>Kullanıcı adı</label>
+        <input name="username" required>
+        <label>Parola</label>
+        <input name="password" type="password" required>
+        <label>Geçerlilik (gün)</label>
+        <input name="gun" type="number" value="30" min="1" required>
+        <button class="btn" type="submit">Kullanıcı oluştur</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>KEY Yönetimi</h2>
+      <form method="post">
+        <div class="inline">
+          <div>
+            <label>KEY</label>
+            <input name="yeni_key" required placeholder="Yeni KEY">
+          </div>
+          <div>
+            <label>Rol</label>
+            <select name="rol">
+              <option value="uye">Üye</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div>
+            <label>Geçerlilik (gün)</label>
+            <input name="gun" type="number" value="30" min="1" required>
+          </div>
+        </div>
+        <div>
+          <label>Admin Yetkileri</label>
+          <div class="permissions">
+            <label><input type="checkbox" name="perm_manage_keys" checked> KEY Yönetimi</label>
+            <label><input type="checkbox" name="perm_view_support" checked> Destek</label>
+            <label><input type="checkbox" name="perm_view_stats" checked> İstatistik</label>
+            <label><input type="checkbox" name="perm_manage_users" checked> Kullanıcı Yönetimi</label>
+          </div>
+        </div>
+        <button class="btn" type="submit">KEY oluştur</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Mevcut KEY'ler</h2>
+      <table class="table">
+        <thead><tr><th>KEY</th><th>Rol</th><th>Bitiş</th><th>İzinler</th><th>İşlemler</th></tr></thead>
+        <tbody>
+          {% for k, v in keys.items() %}
+          <tr>
+            <td><code>{{ k }}</code></td>
+            <td>{{ v.rol }}</td>
+            <td>{{ v.bitis }}</td>
+            <td>{% if v.perms %}{{ v.perms | join(", ") }}{% else %}-{% endif %}</td>
+            <td class="no-wrap">
+              <details>
+                <summary class="small">Düzenle</summary>
+                <form method="post" action="/admin/edit_key/{{ k }}" class="inline small-form">
+                  <div>
+                    <label>Rol</label>
+                    <select name="rol">
+                      <option value="uye" {% if v.rol=='uye' %}selected{% endif %}>Üye</option>
+                      <option value="admin" {% if v.rol=='admin' %}selected{% endif %}>Admin</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Geçerlilik (gün)</label>
+                    <input name="gun" type="number" value="30" min="1">
+                  </div>
+                  <div class="permissions">
+                    <label><input type="checkbox" name="perm_manage_keys" {% if 'manage_keys' in v.perms %}checked{% endif %}> KEY Yönetimi</label>
+                    <label><input type="checkbox" name="perm_view_support" {% if 'view_support' in v.perms %}checked{% endif %}> Destek</label>
+                    <label><input type="checkbox" name="perm_view_stats" {% if 'view_stats' in v.perms %}checked{% endif %}> İstatistik</label>
+                    <label><input type="checkbox" name="perm_manage_users" {% if 'manage_users' in v.perms %}checked{% endif %}> Kullanıcı Yönetimi</label>
+                  </div>
+                  <button class="btn tiny" type="submit">Kaydet</button>
+                </form>
+              </details>
+              <form method="post" action="/admin/delete_key/{{ k }}" style="display:inline" onsubmit="return confirm('Silmek istediğine emin misin?');">
+                <button class="btn tiny red" type="submit">Sil</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>Destek Talepleri</h2>
+      {% for kullanici, listesi in destek.items() %}
+      <div class="support-block">
+        <h3>{{ kullanici }}</h3>
+        {% for d in listesi %}
+        <div class="ticket">
+          <div><strong>Konu:</strong> {{ d.konu }}</div>
+          <div><strong>Durum:</strong> {{ d.status if d.status else "open" }}</div>
+          <div><small>{{ d.created }}</small></div>
+          <div id="chat-messages-{{ d.id }}" style="max-height:250px;overflow:auto;">
+            {% for msg in d.messages %}
+            <div><strong>{{ msg.sender }}:</strong> {{ msg.text }} <small>{{ msg.tarih }}</small></div>
+            {% endfor %}
+          </div>
+          <form class="chat-form" data-ticket="{{ d.id }}">
+            <input name="message" placeholder="Yanıt yaz..." required autocomplete="off">
+            <button class="btn" type="submit">Gönder</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="toast-container"></div>
+</body>
+</html>

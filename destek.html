@@ -1,0 +1,54 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Canlı Destek - ANKA</title>
+  <link href="/static/css/style.css" rel="stylesheet">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" crossorigin="anonymous"></script>
+  <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><img src="/static/img/logo.svg" width="30" alt="logo"> ANKA Destek</div>
+    <div class="nav-right">
+      <a href="/panel" class="btn small">Geri</a>
+      <a href="/cikis" class="btn small red">Çıkış</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>Yeni Destek Talebi Oluştur</h2>
+      <form method="post">
+        <label>Konu</label>
+        <input name="konu" required placeholder="Konu">
+        <label>Mesaj</label>
+        <textarea name="mesaj" required placeholder="Nasıl yardımcı olabilirim?"></textarea>
+        <button type="submit" class="btn">Gönder</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Açık Konuşmalar</h2>
+      {% for ticket in destekler %}
+      <div class="support-block">
+        <div><strong>Konu:</strong> {{ ticket.konu }} <small>({{ ticket.id }})</small></div>
+        <div><small>Oluşturulma: {{ ticket.created }}</small></div>
+        <div id="chat-messages-{{ ticket.id }}" class="ticket" style="max-height:300px;overflow:auto;">
+          {% for msg in ticket.messages %}
+          <div><strong>{{ msg.sender }}:</strong> {{ msg.text }} <small>{{ msg.tarih }}</small></div>
+          {% endfor %}
+        </div>
+        <form class="chat-form" data-ticket="{{ ticket.id }}">
+          <input type="text" name="message" placeholder="Mesaj yaz..." required autocomplete="off">
+          <button class="btn" type="submit">Gönder</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Kayıt Ol - ANKA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="centered-card">
+    <div class="logo"><img src="/static/img/logo.svg" width="40" alt="logo"> <span>ANKA Kayıt</span></div>
+    <h1>Üye Ol</h1>
+    <form method="post" action="/register">
+      <label>Kullanıcı adı</label>
+      <input name="username" required>
+      <label>Parola</label>
+      <input name="password" type="password" required>
+      <button type="submit" class="btn">Kayıt Ol</button>
+    </form>
+    <p style="margin-top:8px;">Zaten üyeysen <a href="/">giriş yap</a>.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Log - ANKA</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><img src="/static/img/logo.svg" width="28" alt="logo"> ANKA</div>
+    <div class="nav-right">
+      <a href="/panel" class="btn small">Geri</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>Log: {{ filename }}</h2>
+      <pre style="background:#0b0e1f;border:1px solid #2f3150;padding:15px;border-radius:8px;overflow:auto;">{{ log }}</pre>
+    </div>
+  </div>
+</body>
+</html>

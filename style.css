@@ -1,0 +1,27 @@
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0f111a;color:#e8e8ee;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;}
+a{color:#6ce;text-decoration:none;}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:linear-gradient(135deg,#1f2335,#0f111a);border-bottom:1px solid #2f3150;position:sticky;top:0;z-index:5;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.3rem;}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn{background:#5c5dfc;border:none;padding:10px 16px;border-radius:10px;color:#fff;cursor:pointer;transition:.2s;font-size:0.9rem;display:inline-flex;align-items:center;gap:6px;}
+.btn.small{padding:6px 10px;font-size:0.75rem;}
+.btn.red{background:#c75454;}
+.card{background:#1f2335;padding:20px;border-radius:16px;margin-bottom:18px;box-shadow:0 25px 60px -10px rgba(0,0,0,.7);}
+.container{padding:25px;max-width:1200px;margin:0 auto;}
+.table{width:100%;border-collapse:collapse;margin-top:10px;}
+.table th, .table td{padding:12px;border-bottom:1px solid #2f3150;text-align:left;font-size:0.9rem;}
+input, select, textarea{background:#0f152b;border:1px solid #2f3150;padding:10px;border-radius:6px;color:#fff;outline:none;width:100%;margin-top:5px;margin-bottom:12px;font-size:0.9rem;}
+h1,h2,h3{margin-bottom:10px;}
+.centered-card{max-width:500px;margin:90px auto;padding:30px;background:#1f2335;border-radius:16px;box-shadow:0 30px 80px -10px rgba(0,0,0,.6);}
+.permissions{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px;}
+.support-block{margin-bottom:15px;border:1px solid #2f3150;border-radius:10px;padding:14px;background:#0f1b3f;}
+.ticket{background:#171d3f;padding:14px;border-radius:10px;margin-bottom:8px;position:relative;}
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+.toast{background: linear-gradient(135deg,#5c5dfc,#9b6bff);padding:14px 18px;border-radius:10px;color:#fff;min-width:220px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:slide-in .4s;}
+.toast .close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:12px;}
+@keyframes slide-in{from{opacity:0;transform:translateY(10px);}to{opacity:1;}}
+code{background:#0f152b;padding:4px 6px;border-radius:4px;font-size:0.85rem;}
+.inline{display:flex;gap:15px;flex-wrap:wrap;}
+.no-wrap{white-space:nowrap;}

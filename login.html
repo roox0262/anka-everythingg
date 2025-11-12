@@ -1,0 +1,28 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>ANKA Giriş</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" crossorigin="anonymous"></script>
+  <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+  <div class="centered-card">
+    <div class="logo"><img src="/static/img/logo.svg" width="40" alt="logo"> <span>ANKA Panel</span></div>
+    <h1>Giriş Yap</h1>
+    <form method="post" action="/" class="form">
+      <label>KEY ile Giriş</label>
+      <input name="key" placeholder="KEY gir" autocomplete="off">
+      <label>Ya da kullanıcı / parola</label>
+      <input name="username" placeholder="Kullanıcı adı">
+      <input type="password" name="password" placeholder="Parola">
+      <button type="submit" class="btn">Giriş</button>
+    </form>
+    <p style="margin-top:8px;">Admin için: <code>panel key.90897867keykey</code></p>
+    <p>Yeni üyeysen <a href="/register">kayıt ol</a>.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kullanıcı Paneli - ANKA</title>
+  <link href="/static/css/style.css" rel="stylesheet">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" crossorigin="anonymous"></script>
+  <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><img src="/static/img/logo.svg" width="28" alt="logo"> ANKA</div>
+    <div class="nav-right">
+      <span>Kullanıcı: {{ user }}</span>
+      <a href="/destek" class="btn small">Canlı Destek</a>
+      <a href="/cikis" class="btn small red">Çıkış</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>Dosya Yönetimi</h2>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label>Yeni .py dosyası yükle</label>
+        <input type="file" name="dosya" accept=".py" required>
+        <button type="submit" class="btn">Yükle</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Yüklenen Dosyalar</h3>
+      {% if dosyalar %}
+      <table class="table">
+        <thead><tr><th>Dosya</th><th>İşlemler</th></tr></thead>
+        <tbody>
+          {% for dosya in dosyalar %}
+          <tr>
+            <td>{{ dosya }}</td>
+            <td class="no-wrap">
+              <a href="/run/{{ dosya }}" class="btn tiny">Çalıştır ▶️</a>
+              <a href="/stop/{{ dosya }}" class="btn tiny">Durdur ⏸️</a>
+              <a href="/log/{{ dosya }}" class="btn tiny">Log 📄</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>Henüz dosya yok.</p>
+      {% endif %}
+    </div>
+    <div class="card">
+      <h3>İstatistik</h3>
+      <p>Toplam dosya: {{ dosyalar|length }}</p>
+    </div>
+  </div>
+  <div class="toast-container"></div>
+  <script>window.NEW_REPLIES = {{ new_replies|tojson }};</script>
+</body>
+</html>
