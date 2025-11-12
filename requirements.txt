@@ -2,3 +2,8 @@ flask
 flask-socketio
 eventlet
 werkzeug
+Flask
+gunicorn
+requests
+telebot
+telegram
